@@ -11,17 +11,22 @@ def is_none(x):
 def is_equal_none(x):
     return x != None
 
-integers = [fake.random_int() for _ in range(10000)]
-datetimes = [fake.date_time() for _ in range(10000)]
 
-is_none_time = timeit.timeit("is_none(None)", setup="from __main__ import is_none", number=1000)
-is_equal_none_time = timeit.timeit("is_equal_none(None)", setup="from __main__ import is_equal_none", number=1000)
 
-is_none_integers_time = timeit.timeit("is_none(x)", setup="from __main__ import is_none, integers; x=integers", number=1000)
-is_equal_none_integers_time = timeit.timeit("is_equal_none(x)", setup="from __main__ import is_equal_none, integers; x=integers", number=1000)
+integer_value = fake.random_int() 
+date_time_value = fake.date_time()
 
-is_none_datetimes_time = timeit.timeit("is_none(x)", setup="from __main__ import is_none, datetimes; x=datetimes", number=1000)
-is_equal_none_datetimes_time = timeit.timeit("is_equal_none(x)", setup="from __main__ import is_equal_none, datetimes; x=datetimes", number=1000)
+is_none_time = timeit.timeit("is_none(None)", globals=globals(), number=100)
+is_equal_none_time = timeit.timeit("is_equal_none(None)", globals=globals(), number=100)
+
+is_none_integers_time = timeit.timeit("is_none(x)", globals=globals(), setup="x=integer_value", number=100)
+is_equal_none_integers_time = timeit.timeit("is_equal_none(x)", globals=globals(), setup="x=integer_value", number=100)
+
+is_none_datetimes_time = timeit.timeit("is_none(x)", globals=globals(), setup="x=date_time_value", number=100)
+is_equal_none_datetimes_time = timeit.timeit("is_equal_none(x)", globals=globals(), setup="x=date_time_value", number=100)
+
+
+
 
 print("Performance test results:")
 print("---------------------------")
@@ -47,3 +52,11 @@ bytecode = dis.Bytecode(is_equal_none)
 print("\nInstructions for is_equal_none():")
 for instruction in bytecode:
     print(instruction)
+
+x = 1
+if x.__eq__(None):
+    print("1 is equal to None")
+
+
+
+
